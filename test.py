@@ -15,7 +15,10 @@ def main():
 	print_shape(df_population_total, df_life_expectancy_years, df_income_per_person_gdppercapita_ppp_inflation_adjusted)
 	print_if_nan(df_population_total, df_life_expectancy_years, df_income_per_person_gdppercapita_ppp_inflation_adjusted)
 	
-	df_population_total, 
+	df_pop_total, df_life_expec_years = match_df_pair_idx_reset(df_population_total, df_life_expectancy_years)
+	df_life_expec_years, df_gdp = match_df_pair_idx_reset(df_life_expectancy_years, df_income_per_person_gdppercapita_ppp_inflation_adjusted) 
+	print_shape(df_pop_total, df_life_expec_years, df_gdp)
+
 
 if __name__ == '__main__':
 	main()

@@ -63,6 +63,18 @@ def match_df_pair(df1, df2):
 		return df1, df2
 
 
+def match_df_pair_idx_reset(df1, df2):
+	if df1.isnull().values.any():
+		df1.dropna()
+		df1.reset_index(drop=True)
+
+	if df2.isnull().values.any():
+		df2.dropna()
+		df2.reset_index(drop=True)
+
+	new_df1, new_df2 = match_df_pair(df1, df2)
+	return new_df1, new_df2
+
 
 def main():
 	pass
