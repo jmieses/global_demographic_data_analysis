@@ -75,6 +75,9 @@ def match_df_pair_idx_reset(df1, df2):
 	new_df1, new_df2 = match_df_pair(df1, df2)
 	return new_df1, new_df2
 
+def match_dfs_idx_reset(*dfs_series):
+	res = list(set.intersection(*map(set, dfs_series)))
+	print(res)
 
 def main():
 	pass
