@@ -65,19 +65,52 @@ def match_df_pair(df1, df2):
 
 def match_df_pair_idx_reset(df1, df2):
 	if df1.isnull().values.any():
-		df1.dropna()
-		df1.reset_index(drop=True)
+		df1.dropna(inplace = True)
+		df1.reset_index(drop=True, inplace = True)
 
 	if df2.isnull().values.any():
-		df2.dropna()
-		df2.reset_index(drop=True)
+		df2.dropna(inplace = True)
+		df2.reset_index(drop=True, inplace = True)
 
 	new_df1, new_df2 = match_df_pair(df1, df2)
 	return new_df1, new_df2
 
-def match_dfs_idx_reset(*dfs_series):
-	res = list(set.intersection(*map(set, dfs_series)))
-	print(res)
+
+def common_elements(*list_of_elements):
+	"""
+	Arguments: an iterable containing iterables.
+	Returns: a list containing the intersection of all iterables.
+	Description: This function looks for the common elements across
+				 all iterables and returns a list with all common 
+				 elements. 
+	"""
+	return list(set.intersection(*map(set, list_of_elements)))
+
+
+def drop_dfs_nan(*dfs_series):
+	"""
+	Arguments: an iterable containing data frames list.
+	Returns: iterable of data frames.
+	Description: This functions looks for nan values across
+				 the multiple data frames and removes those
+				 rows. 
+	"""
+	for df in dfs_series:
+		if df.isnull().values.any():
+			df.dropna(inplace = True)
+			df.reset_index(drop = True, inplace = True)
+			
+	return dfs_series
+
+
+def match_dfs_reset_index(*dfs_series):
+	common = common_elements(*[df[df.keys()[0]] for df in dfs_series])
+	print(*common)
+	print("Was called")
+
+	for df in dfs_series:
+		yield df[df[df.keys()[0]].isin(common)]
+
 
 def main():
 	pass
