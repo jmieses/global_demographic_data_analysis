@@ -105,11 +105,11 @@ def drop_dfs_nan(*dfs_series):
 
 def match_dfs_reset_index(*dfs_series):
 	common = common_elements(*[df[df.keys()[0]] for df in dfs_series])
-	print(*common)
-	print("Was called")
 
 	for df in dfs_series:
-		yield df[df[df.keys()[0]].isin(common)]
+		df = df[df[df.keys()[0]].isin(common)]
+		df.reset_index(drop=True, inplace=True)
+		yield df
 
 
 def main():
